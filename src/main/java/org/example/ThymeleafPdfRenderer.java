@@ -18,6 +18,14 @@ public class ThymeleafPdfRenderer {
     }
 
     public void createPdf(Context ctx) throws IOException {
+        try {
+            assert source != null;
+            assert inputStream != null;
+            assert outputStream != null;
+        } catch (AssertionError e) {
+            throw new IllegalArgumentException("Param not initialized");
+        }
+
         final String template = new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
         final String html = this.engine.process(template, ctx);
         final var builder = new PdfRendererBuilder();
