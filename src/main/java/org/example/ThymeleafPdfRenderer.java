@@ -6,6 +6,7 @@ import org.thymeleaf.context.Context;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.util.Optional;
 
 public class ThymeleafPdfRenderer {
     private final TemplateEngine engine;
@@ -18,13 +19,7 @@ public class ThymeleafPdfRenderer {
     }
 
     public void createPdf(Context ctx) throws IOException {
-        try {
-            assert source != null;
-            assert inputStream != null;
-            assert outputStream != null;
-        } catch (AssertionError e) {
-            throw new IllegalArgumentException("Param not initialized");
-        }
+        this.assertNotNullParams();
 
         final String template = new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
         final String html = this.engine.process(template, ctx);
@@ -33,6 +28,12 @@ public class ThymeleafPdfRenderer {
         builder.toStream(outputStream);
         builder.run();
         // TODO: add more settings with builder
+    }
+
+    private void assertNotNullParams() {
+        Optional.ofNullable(this.source).orElseThrow(() -> new IllegalArgumentException("Param source null"));
+        Optional.ofNullable(this.inputStream).orElseThrow(() -> new IllegalArgumentException("Param inputStream null"));
+        Optional.ofNullable(this.outputStream).orElseThrow(() -> new IllegalArgumentException("Param outputStream null"));
     }
 
     public String getSource() {
