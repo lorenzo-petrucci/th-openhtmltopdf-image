@@ -15,9 +15,9 @@ public class Config {
     @Bean
     ImagePdfRenderer renderer() {
         final String baseDir = env.getProperty("base.dir");
-        ImagePdfRenderer renderer = new ImagePdfRenderer();
-        renderer.setSrc(env.getProperty(baseDir + "src.in"));
-        renderer.setOut(env.getProperty(baseDir + "src.out"));
-        return renderer;
+        return new ImagePdfRenderer(
+                env.getProperty(baseDir + "src.in"),
+                env.getProperty(baseDir + "src.out")
+        );
     }
 }
