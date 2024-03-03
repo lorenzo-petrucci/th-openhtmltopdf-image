@@ -12,7 +12,7 @@ test-out: test
 test: setup
 	mvn clean test
 
-setup: #SHELL := /bin/bash
+setup:
 	rm src/main/resources/out.pdf
 	touch src/main/resources/out.pdf
 
