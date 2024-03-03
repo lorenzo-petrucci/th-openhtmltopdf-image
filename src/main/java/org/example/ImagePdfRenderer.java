@@ -8,12 +8,8 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 
 public class ImagePdfRenderer {
-    private String src;
-    private String out;
-
-    public ImagePdfRenderer() {
-
-    }
+    private final String src;
+    private final String out;
 
     public ImagePdfRenderer(String src, String out) {
         this.src = src + RendererTypes.HTML.label;
@@ -35,32 +31,16 @@ public class ImagePdfRenderer {
             builder.withHtmlContent(html, src);
             builder.toStream(os);
             builder.run();
+            // TODO: add more settings with builder
         }
     }
-
-    public String getSrc() {
-        return this.src;
-    }
-
-    public void setSrc(String src) {
-        this.src = src;
-    }
-
-    public String getOut() {
-        return out;
-    }
-
-    public void setOut(String out) {
-        this.out = out;
-    }
-
 
     public enum RendererTypes{
         HTML(".html"), PDF(".pdf");
 
         public final String label;
 
-        private RendererTypes(String label) {
+        RendererTypes(String label) {
             this.label = label;
         }
     }
